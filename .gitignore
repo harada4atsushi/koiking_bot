@@ -1,0 +1,8 @@
+nbproject
+vendor
+nohup.out
+koiking_db.sqlite
+koiking_db.sqlite.production
+config.yml
+.DS_Store
+.rvmrc

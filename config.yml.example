@@ -1,0 +1,21 @@
+db:
+  development:
+    adapter: sqlite3
+    dbfile: koiking_db.sqlite
+    database: koiking_db.sqlite
+  production:
+    adapter: sqlite3
+    dbfile: koiking_db.sqlite
+    database: koiking_db.sqlite
+twitter:
+  development:
+    consumer_key: xxxxxxxxxxxxxxxxxxx
+    consumer_secret: xxxxxxxxxxxxxxxxxxx
+    oauth_token: xxxxxxxxxxxxxxxxxxx
+    oauth_token_secret: xxxxxxxxxxxxxxxxxxx
+  production:
+    consumer_key: xxxxxxxxxxxxxxxxxxx
+    consumer_secret: xxxxxxxxxxxxxxxxxxx
+    oauth_token: xxxxxxxxxxxxxxxxxxx
+    oauth_token_secret: xxxxxxxxxxxxxxxxxxx
+mode: development
