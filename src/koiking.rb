@@ -67,7 +67,7 @@ class Koiking
   end
 
   def level
-    MstLevel.where("total_exp <= ?", total_exp).order("level desc").first
+    MstLevel.where("total_exp <= ?", total_exp).order("level desc").first.level
   end
 
 =begin
