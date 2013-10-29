@@ -57,7 +57,7 @@ class Koiking
     str = "コイキング -RT"
     Twitter::search(str).statuses.select{|t| t.user.screen_name != "koiking__bot"}.each_with_index do |t, index|
       break if index >= 20
-      Twitter::favorite(t.id) unless t.favorited && rand(100) > 1
+      Twitter::favorite(t.id) unless t.favorited && rand(200) > 1
       #Twitter::favorite(t.id) if t.user.screen_name == "harada4atsushi"
     end
   end
