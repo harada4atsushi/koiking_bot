@@ -21,7 +21,7 @@ koiking = Koiking.new
 koiking.counter_all
 
 # ふぁぼ
-koiking.fav
+#koiking.fav
 
 =begin
 require "db_accesser"
