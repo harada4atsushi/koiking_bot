@@ -32,10 +32,10 @@ class Koiking
       # レベルアップを判定
       if before_level < level
         levelup_str = "\n\nコイキングは\nレベル#{level}　に　あがった！\n"
-        self.name = "コイキングbot（レベル#{level}）"
-        if now_level == 100
-          self.evolve
-        end
+        Twitter.update_profile(:name => "コイキングbot（レベル#{level}）")
+        #if now_level == 100
+          #self.evolve
+        #end
       end
       # リプライ分
       str = "@#{t.user.screen_name} コイキングの攻撃、「はねる」\n"
@@ -51,6 +51,15 @@ class Koiking
       Reply.create(:status_id => t.id, :screen_name => t.user.screen_name, :added_exp => 0)
     end
     Twitter.update(str)
+  end
+
+  def fav
+    str = "コイキング -RT"
+    Twitter::search(str).statuses.select{|t| t.user.screen_name != "koiking__bot"}.each_with_index do |t, index|
+      break if index >= 20
+      Twitter::favorite(t.id) unless t.favorited && rand(100) > 1
+      #Twitter::favorite(t.id) if t.user.screen_name == "harada4atsushi"
+    end
   end
 
   private
@@ -70,6 +79,7 @@ class Koiking
     MstLevel.where("total_exp <= ?", total_exp).order("level desc").first.level
   end
 
+
 =begin
   def initialize
     config = YAML.load_file("config.yml")
@@ -81,17 +91,6 @@ class Koiking
     @db_accesser = db_accesser
   end
 
-  def name=(name)
-    @twitter.update_name(name)
-  end
-
-  def fav
-    str = "コイキング -RT"
-    @twitter.search(str).statuses.select{|t| t.user.screen_name != "koiking__bot"}.each_with_index do |t, index|
-      break if index >= 20
-      @twitter.favorite(t) if rand(100) == 0
-    end
-  end
 
   # 60m * 24h / 3m = 480 (3分おきにcron設定した場合に1日に1回つぶやく)
   def hop

@@ -20,6 +20,9 @@ end
 koiking = Koiking.new
 koiking.counter_all
 
+# ふぁぼ
+koiking.fav
+
 =begin
 require "db_accesser"
 require "twitter_accesser"
@@ -59,6 +62,4 @@ ensure
   db_accesser.close if defined?(db_accesser)
 end
 
-# ふぁぼ
-koiking.fav
 =end

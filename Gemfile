@@ -5,3 +5,4 @@ gem 'twitter'
 gem "sqlite3"
 gem "moji"
 gem "activerecord"
+gem "rspec"
