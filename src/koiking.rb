@@ -23,26 +23,25 @@ class Koiking
     return if 10 < Reply.where(["strftime('%Y%m', created_at) = ? and screen_name = ?",
       Time.now().strftime("%Y%m"), t.user.screen_name]).count
 
-    # 技リストに存在する
     if contain_method_name?(t.text)
       before_level = level
       exp = rand(30) + 1
       Reply.create(:status_id => t.id, :screen_name => t.user.screen_name, :added_exp => exp)
 
-      # レベルアップを判定
+      # リプライ文
+      str = "@#{t.user.screen_name} コイキングの攻撃、「はねる」\n"
+      str << "ぴちっ！ぴちっ！\n"
+      str << "しかしなにもおこらない。\n"
+      str << "\n"
+      str << "コイキングは経験値#{exp}をもらった。"
       if before_level < level
-        levelup_str = "\n\nコイキングは\nレベル#{level}　に　あがった！\n"
+        str << "\n\nコイキングは\nレベル#{level}　に　あがった！"
         Twitter.update_profile(:name => "コイキングbot（レベル#{level}）")
         #if now_level == 100
           #self.evolve
         #end
       end
-      # リプライ分
-      str = "@#{t.user.screen_name} コイキングの攻撃、「はねる」\n"
-      str << "ぴちっ！ぴちっ！\n"
-      str << "しかしなにもおこらない。\n"
       str << "\n"
-      str << "コイキングは経験値#{exp}をもらった。#{levelup_str}\n"
       str << "現在の経験値：#{total_exp}"
     else
       # 技リストに存在しない
@@ -55,11 +54,18 @@ class Koiking
 
   def fav
     str = "コイキング -RT"
-    Twitter::search(str).statuses.select{|t| t.user.screen_name != "koiking__bot"}.each_with_index do |t, index|
-      break if index >= 20
-      Twitter::favorite(t.id) unless t.favorited && rand(200) > 1
-      #Twitter::favorite(t.id) if t.user.screen_name == "harada4atsushi"
+    Twitter::search(str).statuses.select{|t| t.user.screen_name != "koiking__bot" && !t.favorited}
+      .each_with_index do |t, index|
+      break if index >= 5
+      Twitter::favorite(t.id)
     end
+  end
+
+  # 60m * 24h / 3m = 480 (3分おきにcron設定した場合に1日に1回程度つぶやく)
+  def hop
+    per = rand(480)
+    cnt = rand(4) + 1
+    Twitter.update("ﾋﾟﾁｯ" * cnt + "!!") if per == 0
   end
 
   private
@@ -79,7 +85,6 @@ class Koiking
     MstLevel.where("total_exp <= ?", total_exp).order("level desc").first.level
   end
 
-
 =begin
   def initialize
     config = YAML.load_file("config.yml")
@@ -92,12 +97,6 @@ class Koiking
   end
 
 
-  # 60m * 24h / 3m = 480 (3分おきにcron設定した場合に1日に1回つぶやく)
-  def hop
-    per = rand(480)
-    cnt = rand(4) + 1
-    @twitter.update("ﾋﾟﾁｯ" * cnt + "!!") if per == 0
-  end
 
   def level(exp = nil)
     @db_accesser.get_level(exp)

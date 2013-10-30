@@ -6,6 +6,13 @@ require "src/koiking"
 require "src/models/reply"
 require "src/models/mst_level"
 
+unless ARGV[0].nil?
+  unless ["hop", "fav"].include?(ARGV[0])
+    puts "無効な引数が指定されています"
+    exit
+  end
+end
+
 config = YAML.load_file( 'config.yml' )
 $mode = config["mode"]
 ActiveRecord::Base.establish_connection(config["db"][$mode])
@@ -18,10 +25,21 @@ Twitter.configure do |cnf|
 end
 
 koiking = Koiking.new
-koiking.counter_all
+
+if ARGV[0].nil?
+  koiking.counter_all
+else
+  koiking.__send__ ARGV[0]
+end
+
+
+
+
+# はねる
+#koiking.hop
 
 # ふぁぼ
-#koiking.fav
+#oiking.fav
 
 =begin
 require "db_accesser"
@@ -33,8 +51,7 @@ puts "start koiking_bot_task"
 twitter = TwitterAccesser.new
 koiking = Koiking.new
 
-# はねる
-koiking.hop
+
 
 infile = open("dictionary", "r:UTF-8")
 dictionary = infile.readlines

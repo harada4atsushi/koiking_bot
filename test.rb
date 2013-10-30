@@ -20,5 +20,5 @@ Twitter.configure do |cnf|
 end
 
 koiking = Koiking.new
-koiking.fav
+koiking.hop
 
