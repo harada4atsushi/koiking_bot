@@ -29,7 +29,7 @@ koiking = Koiking.new
 if ARGV[0].nil?
   koiking.counter_all
 else
-  koiking.__send__ ARGV[0]
+  koiking.send(ARGV[0])
 end
 
 
