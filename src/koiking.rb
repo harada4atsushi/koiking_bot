@@ -1,6 +1,4 @@
 # -*- mode:ruby; coding:utf-8 -*-
-require "moji"
-
 class Koiking
 
   def initialize

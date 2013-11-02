@@ -3,8 +3,13 @@ $:.unshift File.dirname(__FILE__)
 require "active_record"
 require "twitter"
 require "src/koiking"
-require "src/models/reply"
-require "src/models/mst_level"
+#require "src/models/reply"
+#require "src/models/mst_level"
+require "moji"
+
+Dir[File.join(File.dirname(__FILE__), "models", "**/*.rb")].each do |f|
+  require f
+end
 
 unless ARGV[0].nil?
   unless ["hop", "fav"].include?(ARGV[0])
@@ -18,7 +23,7 @@ $mode = config["mode"]
 ActiveRecord::Base.establish_connection(config["db"][$mode])
 
 Twitter.configure do |cnf|
-  cnf.consumer_key = config["twitter"][$mode]["consumer_key"]
+  cnf.consumer_key = config["twitter"][$mode]["consumer_key"]r
   cnf.consumer_secret = config["twitter"][$mode]["consumer_secret"]
   cnf.oauth_token = config["twitter"][$mode]["oauth_token"]
   cnf.oauth_token_secret = config["twitter"][$mode]["oauth_token_secret"]

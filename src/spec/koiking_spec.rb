@@ -1,21 +1,13 @@
-$:.unshift File.dirname(__FILE__)
-require "./src/koiking"
-require "active_record"
-require "twitter"
+require "./src/spec/spec_helper"
 
 describe 'Koiking' do
-  before do
-    #config = YAML.load_file( 'config.yml' )
-    #$mode = config["mode"]
-    #ActiveRecord::Base.establish_connection(config["db"][$mode])
-
-    #Twitter.configure do |cnf|
-    #  cnf.consumer_key = config["twitter"][$mode]["consumer_key"]
-    #  cnf.consumer_secret = config["twitter"][$mode]["consumer_secret"]
-    #  cnf.oauth_token = config["twitter"][$mode]["oauth_token"]
-    #  cnf.oauth_token_secret = config["twitter"][$mode]["oauth_token_secret"]
-    #end
-
+  describe "#counter" do
+    context "同日10回目以上のリプライの場合" do
+      it "リプライを返さないこと" do
+        puts Reply.where(nil)
+        1.should == 1
+      end
+    end
   end
 
   describe "#fav" do
@@ -37,6 +29,13 @@ describe 'Koiking' do
       Koiking.new.fav
     end
   end
+end
+
+=begin
+require "./src/koiking"
+require "active_record"
+
+describe 'Koiking' do
 
   #describe "#hop" do
   #  it do
@@ -44,3 +43,4 @@ describe 'Koiking' do
   #  end
   #end
 end
+=end
