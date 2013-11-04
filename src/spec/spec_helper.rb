@@ -2,6 +2,7 @@ require "yaml"
 require "active_record"
 require "twitter"
 require "database_cleaner"
+require "factory_girl"
 
 config = YAML.load_file( 'config.yml' )
 ActiveRecord::Base.establish_connection(config["db"]["test"])

@@ -2,9 +2,10 @@ require "./src/spec/spec_helper"
 
 describe 'Koiking' do
   describe "#counter" do
-    context "同日10回目以上のリプライの場合" do
+    context "同日10回目以上の反撃の場合" do
       it "リプライを返さないこと" do
-        puts Reply.where(nil)
+        #FactoryGirl.create(:reply)
+        #puts Reply.where(nil).to_yaml
         1.should == 1
       end
     end
