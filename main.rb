@@ -7,7 +7,7 @@ require "src/koiking"
 #require "src/models/mst_level"
 require "moji"
 
-Dir[File.join(File.dirname(__FILE__), "models", "**/*.rb")].each do |f|
+Dir[File.join(File.dirname(__FILE__), "src", "models", "**/*.rb")].each do |f|
   require f
 end
 
