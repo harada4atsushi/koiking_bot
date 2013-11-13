@@ -54,7 +54,7 @@ class Koiking
     str = "コイキング -RT"
     Twitter.search(str).statuses.select{|t| t.user.screen_name != "koiking__bot" && !t.favorited}
       .each_with_index do |t, index|
-      break if index >= 5
+      break if index >= 3
       Twitter.favorite(t.id)
     end
   end
