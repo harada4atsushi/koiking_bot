@@ -17,8 +17,8 @@ class Koiking
     return unless t.id > (Reply.maximum(:status_id) || 0)
     # 前日以降のリプライのみ対応
     return unless t.created_at.to_date >= Date.today - 1
-    # 1日5回まで
-    return if 5 < Reply.where(["strftime('%Y%m%d', created_at) = ? and screen_name = ?",
+    # 1日3回まで
+    return if 3 < Reply.where(["strftime('%Y%m%d', created_at) = ? and screen_name = ?",
       Time.now().strftime("%Y%m%d"), t.user.screen_name]).count
 
     if contain_method_name?(t.text)
@@ -54,7 +54,7 @@ class Koiking
     str = "コイキング -RT"
     Twitter.search(str).statuses.select{|t| t.user.screen_name != "koiking__bot" && !t.favorited}
       .each_with_index do |t, index|
-      break if index >= 3
+      break if index >= 1
       Twitter.favorite(t.id)
     end
   end
