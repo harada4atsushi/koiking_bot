@@ -3,8 +3,6 @@ $:.unshift File.dirname(__FILE__)
 require "active_record"
 require "twitter"
 require "src/koiking"
-#require "src/models/reply"
-#require "src/models/mst_level"
 require "moji"
 
 Dir[File.join(File.dirname(__FILE__), "src", "models", "**/*.rb")].each do |f|

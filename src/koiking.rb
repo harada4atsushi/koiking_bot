@@ -17,9 +17,9 @@ class Koiking
     return unless t.id > (Reply.maximum(:status_id) || 0)
     # 前日以降のリプライのみ対応
     return unless t.created_at.to_date >= Date.today - 1
-    # 1日10回まで
-    return if 10 < Reply.where(["strftime('%Y%m', created_at) = ? and screen_name = ?",
-      Time.now().strftime("%Y%m"), t.user.screen_name]).count
+    # 1日5回まで
+    return if 5 < Reply.where(["strftime('%Y%m%d', created_at) = ? and screen_name = ?",
+      Time.now().strftime("%Y%m%d"), t.user.screen_name]).count
 
     if contain_method_name?(t.text)
       before_level = level
@@ -47,7 +47,7 @@ class Koiking
       str << "　" * rand(20)
       Reply.create(:status_id => t.id, :screen_name => t.user.screen_name, :added_exp => 0)
     end
-    Twitter.update(str)
+    Twitter.update(str, :in_reply_to_status_id => t.id)
   end
 
   def fav
