@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'json', '~> 1.7.7'
+gem 'json', '~> 1.8.2'
 gem 'twitter'
 gem "sqlite3"
 gem "moji"

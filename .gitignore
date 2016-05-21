@@ -6,3 +6,4 @@ koiking_db.sqlite.production
 config.yml
 .DS_Store
 .rvmrc
+.bundle
